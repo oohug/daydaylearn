@@ -43,8 +43,7 @@ public class MybatisConfig {
         factory.setDataSource(shardingDataSource);
 
         if (StringUtils.hasText(this.properties.getConfig())) {
-            factory.setConfigLocation(
-                    this.resourceLoader.getResource(this.properties.getConfig()));
+            factory.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfig()));
         } else {
             if (this.interceptors != null && this.interceptors.length > 0) {
                 factory.setPlugins(this.interceptors);
@@ -67,8 +66,6 @@ public class MybatisConfig {
      *
      * @param dataSource
      * @return
-     * @author SHANHY
-     * @create 2016年2月18日
      */
     /*@Bean
     public PageHelper pageHelper(DataSource dataSource) {
