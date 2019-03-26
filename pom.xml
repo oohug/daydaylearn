@@ -11,6 +11,7 @@
     <modules>
         <module>springboot2-shardingjdbc-tkmapper</module>
         <module>springboot2-redis</module>
+        <module>example</module>
     </modules>
 
 
