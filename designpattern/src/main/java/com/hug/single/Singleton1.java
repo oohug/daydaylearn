@@ -11,10 +11,12 @@ public class Singleton1 {
 
     private Singleton1(){
 
-        if(flag == false){
-            flag = true;
-        }else{
-            throw new RuntimeException("重复，已经存在实例" + Singleton1.getInstance());
+        synchronized(Singleton1.class){
+            if(flag == false){
+                flag = true;
+            }else{
+                throw new RuntimeException("重复，已经存在实例" + Singleton1.getInstance());
+            }
         }
     }
 
