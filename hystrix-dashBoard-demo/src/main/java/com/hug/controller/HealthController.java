@@ -1,14 +1,16 @@
 package com.hug.controller;
 
-import com.hug.sercice.TranService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,17 +31,42 @@ public class HealthController {
 
     @Resource
     Environment evn;
-    @Resource
-    TranService tranService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @GetMapping(value = "status")
     @ApiOperation(value = "health", notes = "health")
     public String health() {
-        LOGGER.debug("-{}", evn.getProperty("catalina.base"));
-
-        tranService.testTran();
-
+        LOGGER.debug("logging.config={},catalina.base={}", evn.getProperty("logging.config"), evn.getProperty("catalina.base"));
         return "ok";
+    }
+
+    @ApiOperation(value = "redis.get", notes = "redis.get")
+    @GetMapping(value = "redis/get/{key}")
+    @ResponseBody
+    public String redis(@PathVariable String key) {
+
+        if (StringUtils.isEmpty(key)) {
+            return key;
+        }
+
+        String rateCount = stringRedisTemplate.opsForValue().get(key);
+
+        return rateCount;
+    }
+
+    @GetMapping(value = "redis/del/{key}")
+    @ApiOperation(value = "redis.del", notes = "redis.del")
+    @ResponseBody
+    public String redisDel(@PathVariable String key) {
+
+        if (StringUtils.isEmpty(key)) {
+            return key;
+        }
+
+        Boolean result = stringRedisTemplate.delete(key);
+
+        return String.valueOf(result);
     }
 
 }

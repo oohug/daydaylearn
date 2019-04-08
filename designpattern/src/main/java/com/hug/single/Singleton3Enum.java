@@ -11,7 +11,7 @@ public enum Singleton3Enum {
 
     private SingleFactory singleFactory;
 
-    private Singleton3Enum() {
+    Singleton3Enum() {
         singleFactory = new SingleFactory();
     }
 

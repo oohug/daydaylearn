@@ -9,22 +9,22 @@ public class Singleton1 {
 
     private static boolean flag = false;
 
-    private Singleton1(){
+    private Singleton1() {
 
-        synchronized(Singleton1.class){
-            if(flag == false){
+        synchronized (Singleton1.class) {
+            if (flag == false) {
                 flag = true;
-            }else{
-                throw new RuntimeException("重复，已经存在实例" + Singleton1.getInstance());
+            } else {
+                throw new RuntimeException("已经存在实例" + Singleton1.getInstance());
             }
         }
     }
 
-    public static Singleton1 getInstance(){
+    public static Singleton1 getInstance() {
 
-        if(null == singleton1){
-            synchronized(Singleton1.class){
-                if(null == singleton1){
+        if (null == singleton1) {
+            synchronized (Singleton1.class) {
+                if (null == singleton1) {
                     singleton1 = new Singleton1();
                 }
 
