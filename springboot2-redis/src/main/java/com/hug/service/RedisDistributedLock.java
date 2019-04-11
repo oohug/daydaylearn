@@ -1,5 +1,7 @@
 package com.hug.service;
 
+import io.lettuce.core.RedisAsyncCommandsImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -20,6 +22,7 @@ import java.util.UUID;
 //import redis.clients.jedis.JedisCluster;
 //import redis.clients.jedis.JedisCommands;
 
+@Slf4j
 @Component
 public class RedisDistributedLock {
 
@@ -44,11 +47,23 @@ public class RedisDistributedLock {
     public boolean tryLock(String key, long expire) {
         try {
             RedisCallback<String> callback = (connection) -> {
+                Object nativeConnection = connection.getNativeConnection();
+                if (nativeConnection instanceof JedisCluster) {
+                    log.info("this is JedisCluster 集群模式");
+                }
+                // 单机模式
+                else if (nativeConnection instanceof RedisProperties.Jedis) {
+                    log.info("this is Jedis 单机模式");
+                }
+
+                RedisAsyncCommandsImpl redisAsyncCommands = (RedisAsyncCommandsImpl) connection.getNativeConnection();
                 JedisCommands commands = (JedisCommands) connection.getNativeConnection();
                 String uuid = UUID.randomUUID().toString();
                 return commands.set(key, uuid, "NX", "PX", expire);
             };
             String result = stringRedisTemplate.execute(callback);
+
+            System.out.println("---tryLock = " + result);
 
             return !StringUtils.isEmpty(result);
         } catch (Exception e) {
@@ -72,7 +87,6 @@ public class RedisDistributedLock {
     }
 
     /**
-     *
      * @param key
      * @param requestId value
      * @return
@@ -92,16 +106,20 @@ public class RedisDistributedLock {
                 // 集群模式和单机模式虽然执行脚本的方法一样，但是没有共同的接口，所以只能分开执行
                 // 集群模式
                 if (nativeConnection instanceof JedisCluster) {
+                    log.info("this is JedisCluster 集群模式");
                     return (Long) ((JedisCluster) nativeConnection).eval(UNLOCK_LUA, keys, args);
                 }
 
                 // 单机模式
                 else if (nativeConnection instanceof RedisProperties.Jedis) {
+                    log.info("this is Jedis 单机模式");
                     return (Long) ((Jedis) nativeConnection).eval(UNLOCK_LUA, keys, args);
                 }
                 return 0L;
             };
             Long result = stringRedisTemplate.execute(callback);
+
+            log.info("result={}", result);
 
             return result != null && result > 0;
         } catch (Exception e) {
