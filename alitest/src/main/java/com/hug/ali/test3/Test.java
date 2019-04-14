@@ -20,22 +20,23 @@ public class Test {
                 filePathsList.add(file);
         }
 
-        CountDownLatch producerLatch = new CountDownLatch(filePathsList.size());
-        CountDownLatch consumerLatch = new CountDownLatch(filePathsList.size());
+        CountDownLatch countDownLatch = new CountDownLatch(filePathsList.size() + 1);
 
         ExecutorService pool = Executors.newFixedThreadPool(10);
         for (int i = 0; i < filePathsList.size(); i++) {
             File temp = filePathsList.get(i);
-            pool.submit(new Producer(producerLatch, temp));
+            pool.submit(new Producer(countDownLatch, temp));
         }
 
-        Consumer consumer = new Consumer(consumerLatch);
+        Consumer consumer = new Consumer(countDownLatch);
         FutureTask<Boolean> result = new FutureTask(consumer);
         new Thread(result).start();
         try {
             result.get();
             Resource resource = Resource.getInstance();
+            // 分组排序（指标升序）
             resource.printResultSet();
+            // 每个组的最小指标值
             resource.printMinInGroup();
         } catch (InterruptedException e) {
             e.printStackTrace();

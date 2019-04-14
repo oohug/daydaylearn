@@ -13,34 +13,46 @@ public class Resource {
         return resource;
     }
 
-    // because customer just only one, not necessary to consider synchronized
-    ConcurrentHashMap<String, TreeSet<MyData>> map = new ConcurrentHashMap();
+    /**
+     * key = groupId
+     * value = MyData List
+     */
+    ConcurrentHashMap<Integer, TreeSet<MyData>> map = new ConcurrentHashMap();
 
-    // record sort keys for sorting list
-    TreeSet<String> keys = new TreeSet<>();
+    // groupId 分组排序key
+    TreeSet<Integer> keys = new TreeSet<>();
 
+    /**
+     * 构建分组排序
+     *
+     * @param raw
+     */
     public void put(final String raw) {
-        TreeSet<MyData> myDataList = ReaderUtil.extract(raw);
-        myDataList.forEach(myData -> {
-            TreeSet<MyData> currentGroup = map.get(myData.getGroupId());
-            if (currentGroup == null) {
-                TreeSet<MyData> list = new TreeSet<>();
-                list.add(myData);
-                map.put(myData.getGroupId(), list);
-                keys.add(myData.getGroupId());
-            } else {
-                currentGroup.add(myData);
-                map.put(myData.getGroupId(), currentGroup);
-            }
-        });
+
+        String[] data = raw.split(",");
+        MyData myData = new MyData(data[0], Integer.valueOf(data[1]), Float.parseFloat(data[2]));
+
+        TreeSet<MyData> currentGroup = map.get(myData.getGroupId());
+        if (currentGroup == null) {
+            TreeSet<MyData> list = new TreeSet<>();
+            list.add(myData);
+            map.put(myData.getGroupId(), list);
+            keys.add(myData.getGroupId());
+        } else {
+            currentGroup.add(myData);
+            map.put(myData.getGroupId(), currentGroup);
+        }
 
     }
 
+
     public void printResultSet() {
+        System.out.println("分组排序（指标升序）:");
         keys.forEach(key -> System.out.println(map.get(key)));
     }
 
     public void printMinInGroup() {
+        System.out.println("\n每个组的最小指标值：");
         keys.forEach(key -> System.out.println(map.get(key).first()));
     }
 }

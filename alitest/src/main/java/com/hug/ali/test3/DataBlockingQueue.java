@@ -40,4 +40,8 @@ public class DataBlockingQueue {
         }
         return result;
     }
+
+    public boolean isEmpty(){
+        return resourceQueue.isEmpty();
+    }
 }

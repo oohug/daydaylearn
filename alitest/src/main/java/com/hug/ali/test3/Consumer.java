@@ -19,11 +19,15 @@ public class Consumer implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() {
-        while (latch.getCount() != 0) {
-            String rawDate = queue.take();
-            resource.put(rawDate);
-            latch.countDown();
+    public Boolean call(){
+        while (true){
+            if(!queue.isEmpty()){
+                String rawDate = queue.take();
+                resource.put(rawDate);
+            }else if(latch.getCount() <= 1){
+                latch.countDown();
+                break;
+            }
         }
         return true;
     }

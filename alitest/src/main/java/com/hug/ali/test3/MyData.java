@@ -8,12 +8,12 @@ public class MyData implements Comparable<MyData> {
     private String id;
 
     // groupId
-    private String groupId;
+    private int groupId;
 
     // quota
     private float quota;
 
-    public MyData(String id, String groupId, float quota) {
+    public MyData(String id, int groupId, float quota) {
         this.id = id;
         this.groupId = groupId;
         this.quota = quota;
@@ -59,11 +59,11 @@ public class MyData implements Comparable<MyData> {
         this.id = id;
     }
 
-    public String getGroupId() {
+    public int getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 
