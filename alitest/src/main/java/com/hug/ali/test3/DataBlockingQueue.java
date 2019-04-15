@@ -7,31 +7,32 @@ public class DataBlockingQueue {
 
     private static DataBlockingQueue queue = new DataBlockingQueue();
 
-    private DataBlockingQueue(){
+    private DataBlockingQueue() {
 
     }
 
-    public static DataBlockingQueue getInstance(){
+    public static DataBlockingQueue getInstance() {
         return queue;
     }
 
-    // files are 50~100,存储文件内容
+    // 文件数大于50小于100,存储文件内容
     private BlockingQueue<String> resourceQueue = new LinkedBlockingQueue(100);
 
     /**
      * 添加行数据到 queue
      */
-    public void add(String rawData){
+    public void add(String rawData) {
         try {
             resourceQueue.put(rawData);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * 从队列中读取数据ß
      */
-    public String take(){
+    public String take() {
         String result = null;
         try {
             result = resourceQueue.take();
@@ -41,7 +42,7 @@ public class DataBlockingQueue {
         return result;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return resourceQueue.isEmpty();
     }
 }

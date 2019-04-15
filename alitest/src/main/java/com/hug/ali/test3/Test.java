@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
+/**
+ * 并发编程考察：题目二测试
+ */
 public class Test {
 
     public static void main(String[] args) {
 
-//        String dirPath = "src/main/resources/files";
-        String dirPath = "/Users/zhaiyueming/IdeaProjects/github/daydaylearn/alitest/src/main/resources/files";
+
+        //获取待读取文件路径
+        // String dirPath = "src/main/resources/files";
+        String dirPath = Test.class.getResource("/").getFile() + "//files";
         File dirFile = new File(dirPath);
 
         final List<File> filePathsList = new ArrayList();

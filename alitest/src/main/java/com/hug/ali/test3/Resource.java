@@ -17,10 +17,10 @@ public class Resource {
      * key = groupId
      * value = MyData List
      */
-    ConcurrentHashMap<Integer, TreeSet<MyData>> map = new ConcurrentHashMap();
+    ConcurrentHashMap<String, TreeSet<MyData>> map = new ConcurrentHashMap();
 
     // groupId 分组排序key
-    TreeSet<Integer> keys = new TreeSet<>();
+    TreeSet<String> keys = new TreeSet<>();
 
     /**
      * 构建分组排序
@@ -30,7 +30,7 @@ public class Resource {
     public void put(final String raw) {
 
         String[] data = raw.split(",");
-        MyData myData = new MyData(data[0], Integer.valueOf(data[1]), Float.parseFloat(data[2]));
+        MyData myData = new MyData(data[0], (data[1]), Float.parseFloat(data[2]));
 
         TreeSet<MyData> currentGroup = map.get(myData.getGroupId());
         if (currentGroup == null) {
@@ -52,7 +52,7 @@ public class Resource {
     }
 
     public void printMinInGroup() {
-        System.out.println("\n每个组的最小指标值：");
+        System.out.println("每个组的最小指标值：");
         keys.forEach(key -> System.out.println(map.get(key).first()));
     }
 }
