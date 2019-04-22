@@ -10,6 +10,7 @@ public class Singleton1 {
     private static boolean flag = false;
 
     private Singleton1() {
+        Class a;
 
         synchronized (Singleton1.class) {
             if (flag == false) {

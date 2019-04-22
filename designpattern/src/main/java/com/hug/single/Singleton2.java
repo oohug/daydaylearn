@@ -15,13 +15,13 @@ public class Singleton2 {
     public static class Singleton2Static {
         public static final Singleton2 INSTANCE = new Singleton2();
     }
-
     public static Singleton2 getInstance() {
         return Singleton2Static.INSTANCE;
     }
 
     public static void main(String[] args) {
         Singleton2 s1 = Singleton2Static.INSTANCE;
+
         Singleton2 s2 = Singleton2Static.INSTANCE;
         Singleton2 s3 = new Singleton2();
 
