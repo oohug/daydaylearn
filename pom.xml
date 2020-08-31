@@ -14,6 +14,12 @@
         <module>example</module>
         <module>designpattern</module>
         <module>hystrix-dashBoard-demo</module>
+        <module>event-listener</module>
+        <module>squirrel</module>
+        <module>enhance</module>
+        <module>x-utils</module>
+        <module>utils</module>
+        <module>multi-api</module>
     </modules>
 
     <dependencies>
