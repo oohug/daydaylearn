@@ -1,6 +1,5 @@
 package hug.common;
 
-import hug.listeners.events.MsgEventEnum;
 import hug.listeners.events.OrderEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,8 @@ public class CommonEventPublisher {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-    public void publish(Object source, MsgEventEnum msgEventEnum) {
-        OrderEvent orderEvent = new OrderEvent(source, msgEventEnum.getEventName());
+    public void publish(Object source, OrderStatusEventEnum orderStatusEventEnum) {
+        OrderEvent orderEvent = new OrderEvent(source, orderStatusEventEnum.getEventName());
         log.info("publish：{}", source);
         publisher.publishEvent(orderEvent);
         log.info("1==========publish success：{}", source);
