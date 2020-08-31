@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 @Api(value = "ApiController", tags = "ApiController API", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class ApiController {
+public class MultiApiController {
 
     @ApiOperation(value = "hello", notes = "Hello Api Test(v1)", response = String.class)
     @GetMapping("hello")
