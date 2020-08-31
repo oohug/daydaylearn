@@ -16,14 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "ApiController", tags = "ApiController API", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MultiApiController {
 
-    @ApiOperation(value = "hello", notes = "Hello Api Test(v1)", response = String.class)
+    @ApiOperation(value = "hello", notes = "Hello Api Test(default)", response = String.class)
+    @GetMapping("hello")
+    public Object hello() {
+        return "version default";
+    }
+
+    @ApiOperation(value = "hello", notes = "Hello Api Test(v1.1)", response = String.class)
     @GetMapping("hello")
     @ApiVersion("1.1")
-    public Object hello() {
+    public Object hello1() {
         return "version 1.1";
     }
 
-    @ApiOperation(value = "hello", notes = "Hello Api Test(v2)", response = String.class)
+    @ApiOperation(value = "hello", notes = "Hello Api Test(v2.1)", response = String.class)
     @GetMapping("hello")
     @ApiVersion("2.1")
     public Object hello2() {
