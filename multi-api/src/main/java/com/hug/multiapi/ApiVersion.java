@@ -20,5 +20,5 @@ public @interface ApiVersion {
      * 1. 小于等于0时（默认），返回404
      * 2. 大于0时，向下兼容取版本；如果依然取不到返回404
      */
-    int missRule() default 10;
+    int missRule() default 0;
 }

@@ -61,12 +61,11 @@ public class MultiApiController {
         return new BaseResponse("v2.1");
     }
 
-    @ApiVersion("4.1")
     @ApiOperation(value = "postJson", notes = "POST格式测试", response = BaseResponse.class)
     @PostMapping(value = "/post/json")
-    public BaseResponse postJsonV3(@RequestBody OrderBaseReq orderBaseReq, HttpRequest httpRequest) {
+    public BaseResponse postJson_default(@RequestBody OrderBaseReq orderBaseReq) {
         long start = System.currentTimeMillis();
         log.info("start {}", start);
-        return new BaseResponse("v4.1");
+        return new BaseResponse("v_default");
     }
 }

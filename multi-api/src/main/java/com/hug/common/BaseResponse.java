@@ -17,7 +17,7 @@ public class BaseResponse<T> {
     @ApiModelProperty(value = "返回消息")
     String message;
     @ApiModelProperty(value = "版本号")
-    String ver;
+    String ver_trace;
     @ApiModelProperty(value = "返回数据")
     T data;
 
@@ -39,6 +39,13 @@ public class BaseResponse<T> {
     public BaseResponse(String code, String message, T data) {
         this.code = code;
         this.message = message;
+        this.data = data;
+    }
+
+    public BaseResponse(String code, String message, String ver_trace, T data) {
+        this.code = code;
+        this.message = message;
+        this.ver_trace = ver_trace;
         this.data = data;
     }
 
