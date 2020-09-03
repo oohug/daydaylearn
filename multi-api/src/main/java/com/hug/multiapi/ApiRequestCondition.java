@@ -56,19 +56,11 @@ public class ApiRequestCondition implements RequestCondition<ApiRequestCondition
 
     @Override
     public ApiRequestCondition getMatchingCondition(HttpServletRequest request) {
-        // 设置默认版本号，请求版本号错误时使用最新版本号的接口
-        String version = String.valueOf(Integer.MAX_VALUE);
         // 请求版本号
-        String apiVersion = request.getHeader(API_VERSION_KEY);
-        if (!StringUtils.isEmpty(apiVersion)) {
-            Matcher m = ApiRequestCondition.API_PATTERN.matcher(apiVersion);
-            if (m.find()) {
-                version = m.group(2);
-            }
-        }
-        // 返回小于等于请求版本号的版本
-        boolean match = false;
+        String version = getApiVersion(request.getHeader(API_VERSION_KEY));
+        boolean match;
         if (missRule > 0) {
+            // 返回小于等于请求版本号的版本
             match = version.compareTo(this.apiVersion) >= 0;
         } else {
             match = version.equals(this.apiVersion);
@@ -77,6 +69,25 @@ public class ApiRequestCondition implements RequestCondition<ApiRequestCondition
             return this;
         }
         return null;
+    }
+
+    /**
+     * 匹配版本号 （匹配不到时候返回Integer.MAX_VALUE;用于判断是否向下兼容API）
+     *
+     * @param apiVersion
+     * @return
+     */
+    public String getApiVersion(String apiVersion) {
+        // 设置默认版本号，请求版本号错误时使用最新版本号的接口
+        String version = String.valueOf(Integer.MAX_VALUE);
+
+        if (!StringUtils.isEmpty(apiVersion)) {
+            Matcher m = ApiRequestCondition.API_PATTERN.matcher(apiVersion);
+            if (m.find()) {
+                version = m.group(2);
+            }
+        }
+        return version;
     }
 
     public static void main(String[] args) {

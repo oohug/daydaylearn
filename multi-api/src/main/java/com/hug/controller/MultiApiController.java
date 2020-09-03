@@ -1,12 +1,11 @@
 package com.hug.controller;
 
-import com.hug.multiapi.ApiVersion;
 import com.hug.common.BaseResponse;
 import com.hug.common.OrderBaseReq;
+import com.hug.multiapi.ApiVersion;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,11 +60,11 @@ public class MultiApiController {
         return new BaseResponse("v2.1");
     }
 
-    @ApiOperation(value = "postJson", notes = "POST格式测试", response = BaseResponse.class)
-    @PostMapping(value = "/post/json")
-    public BaseResponse postJson_default(@RequestBody OrderBaseReq orderBaseReq) {
-        long start = System.currentTimeMillis();
-        log.info("start {}", start);
-        return new BaseResponse("v_default");
-    }
+//    @ApiOperation(value = "postJson", notes = "POST格式测试", response = BaseResponse.class)
+//    @PostMapping(value = "/post/json")
+//    public BaseResponse postJson_default(@RequestBody OrderBaseReq orderBaseReq) {
+//        long start = System.currentTimeMillis();
+//        log.info("start {}", start);
+//        return new BaseResponse("v_default");
+//    }
 }

@@ -6,6 +6,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class ApiVersionResponseAdvice implements ResponseBodyAdvice {
 
     private static String VER_METHOD = "ver_trace";
+    private static String VER_TRACE_FORMAT = "%s -> %s";
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType
@@ -24,8 +26,11 @@ public class ApiVersionResponseAdvice implements ResponseBodyAdvice {
         String requestApiVersion = serverHttpRequest.getHeaders().getFirst("api-version");
         ApiVersion apiVersion = methodParameter.getMethod().getAnnotation(ApiVersion.class);
 
+        String verDesc = String.format(VER_TRACE_FORMAT
+                , StringUtils.isEmpty(requestApiVersion) ? "" : requestApiVersion
+                , null != apiVersion ? "v" + apiVersion.value() : "");
         try {
-            ReflectionHelper.setField(o, VER_METHOD, requestApiVersion + " -> v" + (null != apiVersion ? apiVersion.value() : ""));
+            ReflectionHelper.setField(o, VER_METHOD, verDesc);
         } catch (Exception e) {
             e.printStackTrace();
         }

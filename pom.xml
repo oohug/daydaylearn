@@ -20,6 +20,7 @@
         <module>x-utils</module>
         <module>utils</module>
         <module>multi-api</module>
+        <module>myagent</module>
     </modules>
 
     <dependencies>
