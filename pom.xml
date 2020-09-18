@@ -21,6 +21,7 @@
         <module>utils</module>
         <module>multi-api</module>
         <module>myagent</module>
+        <module>common-log</module>
     </modules>
 
     <dependencies>

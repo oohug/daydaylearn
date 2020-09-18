@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * consumer: SimpleRabbitListenerContainerFactory.setMessageConverter(new MdcJackson2JsonMessageConverter());
+ * spring rabbitmq 消费者线程池线程线程复用时可能取到重复的 ThreadLocal值
  */
 @Slf4j
 public class MdcJackson2JsonMessageConverter extends Jackson2JsonMessageConverter {

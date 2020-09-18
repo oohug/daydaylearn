@@ -11,10 +11,19 @@ import java.util.UUID;
 public class MDCUtil {
 
     /**
+     * create or getThreadLocal
      * @return
      */
     public static String createTno() {
         return !StringUtils.isEmpty(getTno()) ? getTno() : UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    /**
+     * just create
+     * @return
+     */
+    public static String createTnoNew() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     public static void putTno(String tnoVal) {

@@ -1,4 +1,10 @@
-####commons-log-delivery.jar 版本记录
+####日志工具包
+##动态调整日志级别
+参考 
+https://tech.meituan.com/2017/02/17/change-log-level.html
+https://github.com/sekift/change-log-level
+
+##通用日志
 接入步骤
 
 ```pom.xml
