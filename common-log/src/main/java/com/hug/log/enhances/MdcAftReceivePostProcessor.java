@@ -18,7 +18,7 @@ public class MdcAftReceivePostProcessor implements MessagePostProcessor {
         log.trace("after.receive.s:{}", message);
         String x_tid = (String) message.getMessageProperties().getHeaders().get(LogCont.X_TRANSACTION_ID);
         if (StringUtils.isEmpty(x_tid)) {
-            x_tid = MDCUtil.createTno();  // set log:mdc:tno by rabbitmq.x-tid
+            x_tid = MDCUtil.createTnoNew();  // set log:mdc:tno by rabbitmq.x-tid
         }
         MDCUtil.putTno(x_tid);    // set log:mdc:tno
         log.trace("after.receive.e:{}", message);

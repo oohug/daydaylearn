@@ -19,7 +19,7 @@ public class MdcJackson2JsonMessageConverter extends Jackson2JsonMessageConverte
 
         String x_tid = (String) message.getMessageProperties().getHeaders().get(LogCont.X_TRANSACTION_ID);
         if (StringUtils.isEmpty(x_tid)) {
-            x_tid = MDCUtil.createTno();
+            x_tid = MDCUtil.createTnoNew();
         }
         MDCUtil.putTno(x_tid);
         log.debug("fromMessage e:{}", message);
