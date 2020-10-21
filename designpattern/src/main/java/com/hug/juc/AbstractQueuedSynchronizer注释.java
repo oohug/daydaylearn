@@ -1762,7 +1762,7 @@ public class AbstractQueuedSynchronizer注释 extends AbstractOwnableSynchronize
          *
          * @return {@code true} if owned
          */
-        final boolean isOwnedBy(AbstractQueuedSynchronizer sync) {
+        final boolean isOwnedBy(AbstractQueuedSynchronizer注释 sync) {
             return sync == AbstractQueuedSynchronizer注释.this;
         }
 

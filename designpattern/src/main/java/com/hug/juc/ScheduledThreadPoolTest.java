@@ -3,6 +3,7 @@ package com.hug.juc;
 
 import java.util.Date;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 周期性任务的调度
@@ -10,6 +11,9 @@ import java.util.concurrent.*;
 public class ScheduledThreadPoolTest {
 
     public static void main(String[] args) throws InterruptedException {
+
+        AtomicInteger atomicInteger = new AtomicInteger();
+        atomicInteger.compareAndSet(1,2);
 
         ExecutorService scheduledThreadPool = Executors.newFixedThreadPool(1);
         for (int i = 0; i < 3; i++) {
