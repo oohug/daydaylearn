@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="project_name" source="spring.application.name" defaultValue="./"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %-5level [%thread] - [${project_name:- }, tno-%X{tno}] %logger{30} - %m%n</pattern>
+        </encoder>
+
+    </appender>
+
+    <appender name="LOG_API" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/data/log/mall/order/order.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/data/log/mall/order/order-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>1GB</maxFileSize>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{5} - [${project_name:- }, tno-%X{tno}] -
+                %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--控制台打印-->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="LOG_API"/>
+    </root>
+
+</configuration>
